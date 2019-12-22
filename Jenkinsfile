@@ -1,20 +1,17 @@
 pipeline {
 
 environment {
+    path=%path%;
     registry = "ajittua/helloworld-java-spring"
     registryCredential = 'dockerhub'
     dockerImage = ''
-
   }
    agent any
-
    tools {
       // Install the Maven version configured as "M3" and add it to the path.
       maven "M3"
       jdk "JDK 8"
-      docker "DockerHub"
-   }
-
+    }
    stages {
 
       stage('Cloning Git') {
