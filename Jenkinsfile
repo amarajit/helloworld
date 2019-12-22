@@ -1,7 +1,6 @@
 pipeline {
 
 environment {
-    path=%path%;
     registry = "ajittua/helloworld-java-spring"
     registryCredential = 'dockerhub'
     dockerImage = ''
