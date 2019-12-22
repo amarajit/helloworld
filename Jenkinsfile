@@ -1,4 +1,10 @@
 pipeline {
+
+environment {
+    registry = "ajittua/helloworld-java-spring"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
    agent any
 
    tools {
@@ -8,26 +14,53 @@ pipeline {
    }
 
    stages {
-      stage('Build') {
+
+      stage('Cloning Git') {
          steps {
+           git 'https://github.com/amarajit/helloworld.git'
+         }
+       }
+      stage('Building image') {
+             steps{
+               script {
+                 dockerImage = docker.build registry + ":$BUILD_NUMBER"
+               }
+             }
+       }
+       stage('Deploy Image') {
+             steps{
+               script {
+                 docker.withRegistry( '', registryCredential ) {
+                   dockerImage.push()
+                 }
+               }
+             }
+           }
+       stage('Remove Unused docker image') {
+                 steps{
+                   sh "docker rmi $registry:$BUILD_NUMBER"
+                 }
+       }
+      //stage('Build') {
+      //   steps {
             // Get some code from a GitHub repository
-            git 'https://github.com/amarajit/helloworld.git'
+      //      git 'https://github.com/amarajit/helloworld.git'
 
             // Run Maven on a Unix agent.
             //sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
             // To run Maven on a Windows agent, use
-            bat "mvn -Dmaven.test.failure.ignore=true clean package"
-         }
+       //     bat "mvn -Dmaven.test.failure.ignore=true clean package"
+       //  }
 
-         post {
+       //  post {
             // If Maven was able to run the tests, even if some of the test
             // failed, record the test results and archive the jar file.
-            success {
-               junit '**/target/surefire-reports/TEST-*.xml'
-               archiveArtifacts 'target/*.jar'
-            }
-         }
+        //    success {
+        //       junit '**/target/surefire-reports/TEST-*.xml'
+        //       archiveArtifacts 'target/*.jar'
+         //   }
+        // }
       }
    }
 }
