@@ -4,6 +4,7 @@ environment {
     registry = "ajittua/helloworld-java-spring"
     registryCredential = 'dockerhub'
     dockerImage = ''
+    PATH = %PATH%
   }
    agent any
 
