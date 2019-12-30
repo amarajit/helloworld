@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  name: helloworld-java-spring-pipeline-run
+spec:
+  pipelineRef:
+    name: build-and-deploy-pipeline
+  resources:
+    - name: source-repo
+      resourceRef:
+        name: knative-git
+    - name: helloworld-java-spring
+      resourceRef:
+        name: knative-image-helloworld-java-spring

@@ -1,0 +1,9 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: knative-image-helloworld-java-spring
+spec:
+  type: image
+  params:
+    - name: url
+      value: docker.io/ajittua/helloworld-java-spring
