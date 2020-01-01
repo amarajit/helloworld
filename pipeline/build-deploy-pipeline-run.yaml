@@ -2,7 +2,9 @@ apiVersion: tekton.dev/v1alpha1
 kind: PipelineRun
 metadata:
   name: helloworld-java-spring-pipeline-run
+  namespace: default
 spec:
+  serviceAccount: build-bot
   pipelineRef:
     name: build-and-deploy-pipeline
   resources:

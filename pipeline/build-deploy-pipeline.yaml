@@ -17,7 +17,7 @@ spec:
           value: Dockerfile
         - name: pathToContext
             # Point to Dockerfile
-          value: /workspace/docker-source
+          value: .
       resources:
         inputs:
           - name: docker-source
@@ -38,5 +38,5 @@ spec:
                 - build-helloworld-java-spring
       params:
         - name: path
-          value: /workspace/docker-source/helloworld/service.yaml
+          value: service.yaml
 
